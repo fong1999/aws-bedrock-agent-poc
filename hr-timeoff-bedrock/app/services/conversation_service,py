@@ -1,0 +1,119 @@
+# import uuid
+# from typing import Dict, List, Any, Optional
+
+# # Simple in-memory session store (use a database for production)
+# sessions: Dict[str, Dict[str, Any]] = {}
+
+# class ConversationService:
+#     def __init__(self):
+#         self.bedrock = BedrockService()
+    
+#     def process_message(self, message: str, session_id: Optional[str] = None) -> Dict[str, Any]:
+#         """Process a user message and return a response"""
+#         # Get or create session
+#         if not session_id or session_id not in sessions:
+#             session_id = str(uuid.uuid4())
+#             sessions[session_id] = {'history': []}
+        
+#         session = sessions[session_id]
+        
+#         # Add user message to history
+#         session['history'].append({
+#             'role': 'user',
+#             'content': message
+#         })
+        
+#         # Generate prompt from conversation history
+#         prompt = self._build_prompt(session['history'])
+        
+#         # Get response from Bedrock
+#         response = self.bedrock.invoke_model(prompt)
+        
+#         # Add assistant response to history
+#         session['history'].append({
+#             'role': 'assistant',
+#             'content': response
+#         })
+        
+#         return {
+#             'message': response,
+#             'sessionId': session_id
+#         }
+    
+#     def _build_prompt(self, history: List[Dict[str, str]]) -> str:
+#         """Build a prompt for the Bedrock model based on conversation history"""
+#         # System prompt with HR assistant instructions
+#         system_prompt = """
+#         You are an HR assistant specializing in time-off requests and management.
+#         You can help employees:
+#         1. Check their time-off balance
+#         2. Request new time off
+#         3. Check the status of pending requests
+#         4. Help them understand company time-off policies
+        
+#         When helping with time-off requests, collect the following information:
+#         - Start date
+#         - End date
+#         - Type of time off (vacation, sick leave, personal day)
+#         - Reason (optional)
+        
+#         For this demo, use the following made-up data:
+#         - Vacation balance: 15 days
+#         - Sick leave balance: 10 days
+#         - Personal days: 3 days
+        
+#         Be friendly, helpful, and concise in your responses.
+#         """
+        
+#         formatted_history = f"\n\nHuman: <system>{system_prompt}</system>\n\nAssistant: I'll help with your time-off requests and questions."
+        
+#         # Add conversation history
+#         for message in history:
+#             if message['role'] == 'user':
+#                 formatted_history += f"\n\nHuman: {message['content']}"
+#             else:
+#                 formatted_history += f"\n\nAssistant: {message['content']}"
+        
+#         # Add final assistant prefix
+#         formatted_history += "\n\nAssistant:"
+#         return formatted_history
+
+import uuid
+from typing import Dict, List, Any, Optional
+
+# Simple in-memory session store (use a database for production)
+sessions: Dict[str, Dict[str, Any]] = {}
+
+class ConversationService:
+    def __init__(self):
+        # We'll initialize the Bedrock service later
+        pass
+    
+    def process_message(self, message: str, session_id: Optional[str] = None) -> Dict[str, Any]:
+        """Process a user message and return a response"""
+        # Get or create session
+        if not session_id or session_id not in sessions:
+            session_id = str(uuid.uuid4())
+            sessions[session_id] = {'history': []}
+        
+        session = sessions[session_id]
+        
+        # Add user message to history
+        session['history'].append({
+            'role': 'user',
+            'content': message
+        })
+        
+        # For now, just return a mock response
+        response = "This is a placeholder response. AWS Bedrock integration will be added later."
+        
+        # Add assistant response to history
+        session['history'].append({
+            'role': 'assistant',
+            'content': response
+        })
+        
+        return {
+            'message': response,
+            'sessionId': session_id
+        }

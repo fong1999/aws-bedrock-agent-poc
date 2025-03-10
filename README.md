@@ -55,9 +55,55 @@ pip install -r requirements.txt
 7. Test the API: Run FastAPI application
 8. Connect with Your Angular App
 
-Next Steps
+### Virtual Environment
 
-AWS Credentials: Make sure the environment has AWS credentials configured to access Bedrock
-Testing: Test the API endpoints using the Swagger UI at /docs
-Angular Integration: Test the integration with your existing Angular UI
-Enhanced Features: Add more sophisticated HR-specific functionality based on the demo needs
+Here's a step-by-step guide to using those commands to set up virtual environment:
+
+1. First, make sure you're in project directory:
+   ```bash
+   cd hr-timeoff-bedrock
+   ```
+
+2. Create the virtual environment (only need to do this once):
+   ```bash
+   python -m venv venv
+   ```
+   This creates a folder called "venv" in project directory that contains a separate Python installation.
+
+3. Activate the virtual environment:
+   - On macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+   - On Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   You'll notice your command prompt changes to show "(venv)" at the beginning, indicating the virtual environment is active.
+
+4. Install the required packages:
+   ```bash
+   pip install fastapi uvicorn boto3 pydantic python-dotenv httpx
+   ```
+   This installs all the packages into your virtual environment, not the system Python.
+
+5. Run the application:
+   ```bash
+   python main.py
+   ```
+
+Every time we want to work on this project in a new terminal session, we'll need to activate the virtual environment (step 3) before running your code.
+
+To deactivate the virtual environment when we're done working:
+```bash
+deactivate
+```
+
+This approach ensures that the project has its own isolated set of dependencies, which helps avoid conflicts between different projects requiring different versions of the same packages.
+
+### Next Steps
+
+* AWS Credentials: Make sure the environment has AWS credentials configured to access Bedrock
+* Testing: Test the API endpoints using the Swagger UI at /docs
+* Angular Integration: Test the integration with your existing Angular UI
+* Enhanced Features: Add more sophisticated HR-specific functionality based on the demo needs
